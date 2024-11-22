@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Collection</title>
+</head>
+<body>
+    <h1>Books Collection</h1>
+
+    <div id="bookDetails">
+        <p><strong>Title of the first book:</strong> <span id="firstBookTitle"></span></p>
+        <p><strong>Author of the second book:</strong> <span id="secondBookAuthor"></span></p>
+        <p><strong>Genres of all books:</strong> <span id="allBookGenres"></span></p>
+    </div>
+
+    <script>
+        // Fetch the JSON file
+        fetch('books_collection.json')
+            .then(response => response.json())
+            .then(data => {
+                // (a) The title of the first book
+                document.getElementById("firstBookTitle").innerText = data[0].title;
+
+                // (b) The author of the second book
+                document.getElementById("secondBookAuthor").innerText = data[1].author;
+
+                // (c) The genres of all books
+                let genres = data.map(book => book.genres.join(', ')).join(' | ');
+                document.getElementById("allBookGenres").innerText = genres;
+
+                // Log the data in the console
+                console.log("Title of the first book: " + data[0].title);
+                console.log("Author of the second book: " + data[1].author);
+                console.log("Genres of all books:");
+                data.forEach((book, index) => {
+                    console.log(`Book ${index + 1} genres: ` + book.genres.join(', '));
+                });
+            })
+            .catch(error => console.error('Error loading JSON:', error));
+    </script>
+</body>
+</html>
